@@ -68,10 +68,11 @@ public class ControllerTest {
         MvcResult result = resultActions.andDo(print())
                 .andExpect(status().isOk())
 //                .andExpect(model().attributeExists("title"))
-                .andExpect(jsonPath("$.title").value("HelloTitle"))
+//                .andExpect(jsonPath("$.title").value("HelloTitle"))
                 .andReturn();
-//        MvcResult result = resultActions.andExpect(model().attributeExists("title"));
-//        String content = result.getResponse().getContentAsString();
-//        System.out.println(content);
+
+        String content = result.getResponse().getContentAsString();
+        System.out.println("--------------");
+        System.out.println(content);
     }
 }
