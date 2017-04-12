@@ -17,6 +17,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.util.Arrays;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -38,6 +42,9 @@ public class ControllerTest {
 
     @Autowired
     HomeController homeController;
+
+    @Autowired
+    DataSource dataSource;
 
     @Before
     public void before() {
@@ -74,5 +81,13 @@ public class ControllerTest {
         String content = result.getResponse().getContentAsString();
         System.out.println("--------------");
         System.out.println(content);
+    }
+
+    @Test
+    public void h2DBConnectTest() throws Exception {
+        Connection con = dataSource.getConnection();
+//        String sql = "";
+//        con.prepareStatement()
+        System.out.println(con);
     }
 }

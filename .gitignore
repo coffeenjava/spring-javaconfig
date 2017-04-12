@@ -1,5 +1,6 @@
 .*
 target/
-spring-maven.iml
+*.iml
 deploy/
 lib/
+src/main/java/market/config/DBConfig.java

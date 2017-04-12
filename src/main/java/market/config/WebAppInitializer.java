@@ -29,14 +29,16 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     }
 
     /**
-     * 기본 dispatcherServlet 매핑 설정
-     * @return
+     * servlet 매핑 설정
      */
     @Override
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }
 
+    /**
+     * Filter 적용
+     */
     @Override
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
