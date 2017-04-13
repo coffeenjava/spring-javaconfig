@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -46,6 +48,9 @@ public class ControllerTest {
     @Autowired
     DataSource dataSource;
 
+    @Value("classpath*:create.sql")
+    private String H2_DDL;
+
     @Before
     public void before() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -69,25 +74,31 @@ public class ControllerTest {
     }
 
     @Test
-    public void getMapTest() throws Exception {
-        ResultActions resultActions = mockMvc.perform(get("/getMap"));
+    public void getMapTest() {
+        try {
+            ResultActions resultActions = mockMvc.perform(get("/getMap"));
 
-        MvcResult result = resultActions.andDo(print())
-                .andExpect(status().isOk())
+            MvcResult result = resultActions.andDo(print())
+                    .andExpect(status().isOk())
 //                .andExpect(model().attributeExists("title"))
 //                .andExpect(jsonPath("$.title").value("HelloTitle"))
-                .andReturn();
+                    .andReturn();
 
-        String content = result.getResponse().getContentAsString();
-        System.out.println("--------------");
-        System.out.println(content);
+            String content = result.getResponse().getContentAsString();
+            System.out.println("--------------");
+            System.out.println(content);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void h2DBConnectTest() throws Exception {
-        Connection con = dataSource.getConnection();
+//        Connection con = dataSource.getConnection();
 //        String sql = "";
 //        con.prepareStatement()
-        System.out.println(con);
+//        System.out.println(con);
+        System.out.println(getClass().getPackage());
+//        System.out.println(H2_DDL);
     }
 }

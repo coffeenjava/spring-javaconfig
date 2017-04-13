@@ -68,7 +68,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     /**
      * return Content 미디어 타입 정의
      * SpringMVC 의 미디어 타입 체크 순서
-     *  1. URI
+     *  1. URI 확장자
      *  2. Accept in header
      *
      *  ps) configureMessageConverters() 에서 converter 를 추가한 경우 자동으로 데이터를 확인하여
@@ -85,6 +85,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     /**
      * Message Converter 설정
      * @RequestBody 메서드 파라미터값 / @ResponseBody 메서드 리턴값에 사용할 Converter 를 추가한다.
+     * 이 메서드를 구현할 경우 Spring 의 기본 converters 설정은 사라진다.
      * TODO 어느 컨버터가 동작해야 할지 누가 무엇으로 판단하는가?
      */
 //    @Override
