@@ -57,10 +57,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * default servlet 매핑 추가 설정
      * WebAppInitializer.java 에 설정된 매핑으로 들어오는 정적 리소스를 handling 할 수 있도록 한다.
      */
-//    @Override
-//    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-//        configurer.enable();
-//    }
+    @Override
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 
     /**
      * return Content 미디어 타입 정의
@@ -85,18 +85,18 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * 이 메서드를 구현할 경우 Spring 의 기본 converters 설정은 사라진다.
      * TODO 어느 컨버터가 동작해야 할지 누가 무엇으로 판단하는가?
      */
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
-//                .indentOutput(true) // 줄바꿈
-//                .dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-////                .modulesToInstall(new ParameterNamesModule()); // TODO Module for what?
-//
-//        // Json
-//        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
-//        // Xml
-////        converters.add(new MappingJackson2XmlHttpMessageConverter(builder.xml().build()));
-//    }
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder()
+                .indentOutput(true) // 줄바꿈
+                .dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+//                .modulesToInstall(new ParameterNamesModule()); // TODO Module for what?
+
+        // Json
+        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+        // Xml
+//        converters.add(new MappingJackson2XmlHttpMessageConverter(builder.xml().build()));
+    }
 
     /**
      * resource 설정
