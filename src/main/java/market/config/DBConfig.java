@@ -17,6 +17,8 @@ import javax.sql.DataSource;
 
 /**
  * Created by CoffeeAndJava on 2017. 4. 12..
+ *
+ * TODO 어플리케이션 구동 시 DB 스키마 생성 sql(resources/market/sql/create.sql) 구동하는 방법 찾기.
  */
 @Configuration
 public class DBConfig {
