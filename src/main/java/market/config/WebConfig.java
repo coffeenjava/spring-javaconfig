@@ -67,9 +67,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * SpringMVC 의 미디어 타입 체크 순서
      *  1. URI 확장자
      *  2. Accept in header
+     *  3. 기본 설정된 타입
      *
      *  ps) configureMessageConverters() 에서 converter 를 추가한 경우 자동으로 데이터를 확인하여
-     *  알맞은 타입으로 resolve 한다.
+     *  알맞은 타입으로 resolve 한다. (default 타입은 xml 인듯. Springboot 에서는 json 이라는데..)
      */
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
@@ -83,7 +84,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * Message Converter 설정
      * @RequestBody 메서드 파라미터값 / @ResponseBody 메서드 리턴값에 사용할 Converter 를 추가한다.
      * 이 메서드를 구현할 경우 Spring 의 기본 converters 설정은 사라진다.
-     * TODO 어느 컨버터가 동작해야 할지 누가 무엇으로 판단하는가?
+     *
+     * !! 주의 : configureContentNegotiation() 에서 defaultContentType 로 설정된 타입을 추가하지 않을 경우 error
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -92,10 +94,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
 //                .modulesToInstall(new ParameterNamesModule()); // TODO Module for what?
 
+        /** 설정된 순서대로 판단 **/
         // Json
         converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
         // Xml
-//        converters.add(new MappingJackson2XmlHttpMessageConverter(builder.xml().build()));
+        converters.add(new MappingJackson2XmlHttpMessageConverter(builder.xml().build()));
     }
 
     /**

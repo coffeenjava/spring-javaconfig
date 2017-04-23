@@ -4,9 +4,7 @@ import market.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +13,7 @@ import java.util.Map;
  * Created by coffeenjava on 2017. 3. 20..
  */
 @Controller
+//@RestController // @Controller + @ResponseBody
 public class HomeController {
     @Autowired
     TestService testService;
@@ -26,9 +25,7 @@ public class HomeController {
         return testService.getViewName();
     }
 
-//    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    @GetMapping
-    @RequestMapping(value="/getMap", method= RequestMethod.GET)
+    @GetMapping("/getMap") // == @RequestMapping(value="/getMap", method= RequestMethod.GET)
     @ResponseBody
     public Map getMap() {
         Map<String,String> m = new HashMap<>();

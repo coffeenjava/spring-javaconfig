@@ -9,6 +9,8 @@ import javax.servlet.ServletRegistration;
 
 /**
  * Created by coffeenjava on 2017. 4. 15..
+ *
+ * 사용하지 않음.
  * DispatcherServlet 이 아닌 그외 서블릿/필터에 대한 설정이 필요한 경우 구현
  */
 public class ServletInitializer implements WebApplicationInitializer {

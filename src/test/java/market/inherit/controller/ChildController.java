@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/child")
 public class ChildController extends ParentController {
+//    @Autowired
+//    @Qualifier("child")
+//    ServiceIF serviceIF;
 
     @Autowired
-    public void setServiceIF(@Qualifier("child") ServiceIF serviceIF2) {
-//        this.serviceIF = serviceIF;
-        serviceIF = serviceIF2;
+    public void setServiceIF(@Qualifier("child") ServiceIF serviceIF) {
+        this.serviceIF = serviceIF;
     }
 
     @Override
