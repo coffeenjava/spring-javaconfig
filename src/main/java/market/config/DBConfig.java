@@ -1,49 +1,89 @@
 package market.config;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.jdbc.datasource.init.DataSourceInitializer;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-
-import javax.sql.DataSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 /**
  * Created by CoffeeAndJava on 2017. 4. 12..
  */
 @Configuration
+//@PropertySource("classpath:application.properties")
 public class DBConfig {
 
-    @Value("classpath*:create.sql")
-    private Resource H2_DDL;
-
-//    @Bean
-//    public DataSource dataSourceH2DB() {
-//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//    @Value("${create.sql.file}")
+//    private Resource H2_DDL;
+//    
+//    @Value("${create.sql.file}")
+//    private String createSqlFile;
 //
-//        EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.H2).addScript("/market/sql/create.sql").build();
+//    @Value("${datasource.url}")
+//    private String url;
+//    
+//    @Value("${datasource.username}")
+//    private String username;
+//    
+//    @Value("${datasource.password}")
+//    private String password;
+//
+//    @Value("${datasource.driverClassName}")
+//    private String driver;
+    
+    //jdbc:h2:mem:testdb
+//    @Bean
+//    public DataSource dataSource() {
+//        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+//        EmbeddedDatabase db = builder
+//        		.setType(EmbeddedDatabaseType.H2)
+//        		.addScript(createSqlFile).build();
 //        return db;
 //    }
 
-    @Bean
-    public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:~/test");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("1234");
-//        dataSource.setDefaultAutoCommit(false);
+	
 
-//        return new TransactionAwareDataSourceProxy(dataSource);
-        return dataSource;
-    }
+	@Autowired
+	DataSource dataSource;
+
+	@Bean
+	public NamedParameterJdbcTemplate getNamedParameterJdbcTemplate() {
+		return new NamedParameterJdbcTemplate(dataSource);
+	}
+	
+//	@PostConstruct
+//	public void startDBManager() {
+		
+		//hsqldb
+		//DatabaseManagerSwing.main(new String[] { "--url", "jdbc:hsqldb:mem:testdb", "--user", "sa", "--password", "" });
+
+		//derby
+		//DatabaseManagerSwing.main(new String[] { "--url", "jdbc:derby:memory:testdb", "--user", "", "--password", "" });
+
+		//h2
+		//DatabaseManagerSwing.main(new String[] { "--url", "jdbc:h2:mem:testdb", "--user", "sa", "--password", "" });
+
+//	}
+	
+//    @Bean
+//    public DataSource dataSource() {
+//        BasicDataSource dataSource = new BasicDataSource();
+////        dataSource.setDriverClassName("org.h2.Driver");
+////        dataSource.setUrl("jdbc:h2:~/test");
+////        dataSource.setUsername("sa");
+////        dataSource.setPassword("1234");
+////        dataSource.setDefaultAutoCommit(false);
+//        
+//      dataSource.setDriverClassName(driver);
+//      dataSource.setUrl(url);
+//      dataSource.setUsername(username);
+//      dataSource.setPassword(password);
+//
+////        return new TransactionAwareDataSourceProxy(dataSource);
+//        return dataSource;
+//    }
 
 //    @Autowired
 //    @Bean
