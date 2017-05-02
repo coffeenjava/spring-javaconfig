@@ -19,10 +19,8 @@ public class H2DataSource {
 	// jdbc:h2:mem:testdb
 	@Bean
 	public DataSource dataSource() {
-
 		EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
 		EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.H2).addScript(createSqlFile).build();
 		return db;
-
 	}
 }

@@ -13,10 +13,12 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
- * Created by CoffeeAndJava on 2017. 4. 21.. TODO 어플리케이션 구동 시 DB 스키마 생성
- * sql(resources/market/sql/create.sql) 구동하는 방법 찾기.
+ * Created by CoffeeAndJava on 2017. 4. 21..
+ * TODO sql(resources/market/sql/create.sql) properties 외엔 방법 없나?
  */
 public class DBConnectionTest extends SpringTestConfig {
 	@Autowired
@@ -28,6 +30,10 @@ public class DBConnectionTest extends SpringTestConfig {
 	@Test
 	public void h2DBConnectTest() throws Exception {
 		Connection con = dataSource.getConnection();
-		Assert.assertNotNull(con);
+		PreparedStatement pstmt = con.prepareStatement("SELECT * FROM user WHERE user_id='lcrapper'");
+		ResultSet rs = pstmt.executeQuery();
+		rs.next();
+		System.out.println("### user_nm => "+rs.getString("user_nm"));
+		Assert.assertEquals("이수일킹왕짱",rs.getString("user_nm"));
 	}
 }
