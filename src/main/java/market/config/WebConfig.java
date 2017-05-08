@@ -75,9 +75,9 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         // 요청받은 미디어 타입을 찾지 못할 경우 default 로 json 타입 지정
+        // builder 패턴 가능
         configurer.defaultContentType(MediaType.APPLICATION_JSON);
-        // 미디어 타입 추가
-//        configurer.mediaType("xml", MediaType.APPLICATION_ATOM_XML);
+//                .mediaType("xml", MediaType.APPLICATION_ATOM_XML); // 미디어 타입 추가
     }
 
     /**
