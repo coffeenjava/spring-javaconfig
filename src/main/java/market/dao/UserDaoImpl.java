@@ -1,17 +1,16 @@
 package market.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import lombok.extern.slf4j.Slf4j;
+import market.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import market.model.User;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by lcrapper on 2017. 4. 25..
@@ -30,11 +29,12 @@ public class UserDaoImpl implements UserDao {
         
 		String sql = "SELECT * FROM user WHERE user_id=:userId";
 		
-        User result = namedParameterJdbcTemplate.queryForObject(
-                    sql,
-                    params,
-                    new UserMapper());
-                    
+		User result = namedParameterJdbcTemplate.queryForObject(
+				sql,
+				params,
+				userMapper
+				);
+
         //new BeanPropertyRowMapper(Customer.class));
         
         return result;
@@ -48,22 +48,22 @@ public class UserDaoImpl implements UserDao {
 		
 		String sql = "SELECT * FROM user";
 		
-        List<User> result = namedParameterJdbcTemplate.query(sql, params, new UserMapper());
+        List<User> result = namedParameterJdbcTemplate.query(sql, params, userMapper);
         
         return result;
         
 	}
 
-	private static final class UserMapper implements RowMapper<User> {
-
-		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-			User user = new User();
-			user.setUserId(rs.getString("user_id"));
-			user.setUserNm(rs.getString("user_nm"));
-			user.setPhone(rs.getString("phone"));
-			user.setComment(rs.getString("comment"));
-			return user;
+	private RowMapper<User> userMapper = (r,n) -> {
+		try {
+			return User.builder()
+					.userId(r.getString("user_id"))
+					.userNm(r.getString("user_nm"))
+					.phone(r.getString("phone"))
+					.comment(r.getString("comment"))
+					.build();
+		} catch (SQLException e) {
+			return null;
 		}
-	}
-
+	};
 }
